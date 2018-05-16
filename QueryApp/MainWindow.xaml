@@ -6,12 +6,23 @@
         xmlns:local="clr-namespace:QueryApp"
         xmlns:ViewModel="clr-namespace:QueryApp.ViewModel" x:Class="QueryApp.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
     <Grid>
-        <Grid.DataContext>
-            <ViewModel:MainViewModel/>
-        </Grid.DataContext>
-        <DataGrid HorizontalAlignment="Left" Height="208" Margin="80,114,0,0" VerticalAlignment="Top" Width="668" ItemsSource="{Binding CrewData}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="370"/>
+        </Grid.RowDefinitions>
 
+        <DataGrid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" ItemsSource="{Binding CrewDataFiltered}"/>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Stretch">
+            <Label Content="Task:" VerticalAlignment="Top" Width="120" BorderBrush="{x:Null}"/>
+            <ComboBox Margin="10,0,0,0" VerticalAlignment="Bottom" Width="120" SelectedItem="{Binding SelectedTask, Mode=TwoWay}" ItemsSource="{Binding TaskCollection}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+            <Label Content="Type:" VerticalAlignment="Top" Width="120" BorderBrush="{x:Null}"/>
+            <ComboBox Margin="0,0,10,0" VerticalAlignment="Bottom" Width="120" SelectedItem="{Binding SelectedType, Mode=TwoWay}" ItemsSource="{Binding TypeCollection}"/>
+        </StackPanel>
     </Grid>
 </Window>
