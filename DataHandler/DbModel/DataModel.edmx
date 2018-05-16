@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BwiTrainingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="wi16b087_Ex1_CrewMember">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LicenseNumber" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BwiTraining.dbo.wi16b087_Ex1_CrewMemberToTask' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="wi16b087_Ex1_CrewMemberToTask">
+          <Key>
+            <PropertyRef Name="CrewMemberId" />
+            <PropertyRef Name="TaskId" />
+          </Key>
+          <Property Name="CrewMemberId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TaskId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="wi16b087_Ex1_Task">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+          <Property Name="Priority" Type="int" Nullable="false" />
+          <Property Name="TypeId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="wi16b087_Ex1_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_wi16b087_Ex1_CrewMemberToTask_ToCrewMember">
+          <End Role="wi16b087_Ex1_CrewMember" Type="Self.wi16b087_Ex1_CrewMember" Multiplicity="1" />
+          <End Role="wi16b087_Ex1_CrewMemberToTask" Type="Self.wi16b087_Ex1_CrewMemberToTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="wi16b087_Ex1_CrewMember">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="wi16b087_Ex1_CrewMemberToTask">
+              <PropertyRef Name="CrewMemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_wi16b087_Ex1_CrewMemberToTask_ToTask">
+          <End Role="wi16b087_Ex1_Task" Type="Self.wi16b087_Ex1_Task" Multiplicity="1" />
+          <End Role="wi16b087_Ex1_CrewMemberToTask" Type="Self.wi16b087_Ex1_CrewMemberToTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="wi16b087_Ex1_Task">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="wi16b087_Ex1_CrewMemberToTask">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_wi16b087_Ex1_Task_ToType">
+          <End Role="wi16b087_Ex1_Type" Type="Self.wi16b087_Ex1_Type" Multiplicity="1" />
+          <End Role="wi16b087_Ex1_Task" Type="Self.wi16b087_Ex1_Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="wi16b087_Ex1_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="wi16b087_Ex1_Task">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BwiTrainingModelStoreContainer">
+          <EntitySet Name="wi16b087_Ex1_CrewMember" EntityType="Self.wi16b087_Ex1_CrewMember" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="wi16b087_Ex1_Task" EntityType="Self.wi16b087_Ex1_Task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="wi16b087_Ex1_Type" EntityType="Self.wi16b087_Ex1_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="wi16b087_Ex1_CrewMemberToTask" EntityType="Self.wi16b087_Ex1_CrewMemberToTask" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [wi16b087_Ex1_CrewMemberToTask].[CrewMemberId] AS [CrewMemberId], 
+    [wi16b087_Ex1_CrewMemberToTask].[TaskId] AS [TaskId]
+    FROM [dbo].[wi16b087_Ex1_CrewMemberToTask] AS [wi16b087_Ex1_CrewMemberToTask]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_wi16b087_Ex1_CrewMemberToTask_ToCrewMember" Association="Self.FK_wi16b087_Ex1_CrewMemberToTask_ToCrewMember">
+            <End Role="wi16b087_Ex1_CrewMember" EntitySet="wi16b087_Ex1_CrewMember" />
+            <End Role="wi16b087_Ex1_CrewMemberToTask" EntitySet="wi16b087_Ex1_CrewMemberToTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_wi16b087_Ex1_CrewMemberToTask_ToTask" Association="Self.FK_wi16b087_Ex1_CrewMemberToTask_ToTask">
+            <End Role="wi16b087_Ex1_Task" EntitySet="wi16b087_Ex1_Task" />
+            <End Role="wi16b087_Ex1_CrewMemberToTask" EntitySet="wi16b087_Ex1_CrewMemberToTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_wi16b087_Ex1_Task_ToType" Association="Self.FK_wi16b087_Ex1_Task_ToType">
+            <End Role="wi16b087_Ex1_Type" EntitySet="wi16b087_Ex1_Type" />
+            <End Role="wi16b087_Ex1_Task" EntitySet="wi16b087_Ex1_Task" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BwiTrainingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="wi16b087_Ex1_CrewMember">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LicenseNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="wi16b087_Ex1_Task" Relationship="Self.wi16b087_Ex1_CrewMemberToTask" FromRole="wi16b087_Ex1_CrewMember" ToRole="wi16b087_Ex1_Task" />
+        </EntityType>
+        <EntityType Name="wi16b087_Ex1_Task">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
+          <Property Name="TypeId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="wi16b087_Ex1_Type" Relationship="Self.FK_wi16b087_Ex1_Task_ToType" FromRole="wi16b087_Ex1_Task" ToRole="wi16b087_Ex1_Type" />
+          <NavigationProperty Name="wi16b087_Ex1_CrewMember" Relationship="Self.wi16b087_Ex1_CrewMemberToTask" FromRole="wi16b087_Ex1_Task" ToRole="wi16b087_Ex1_CrewMember" />
+        </EntityType>
+        <EntityType Name="wi16b087_Ex1_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="wi16b087_Ex1_Task" Relationship="Self.FK_wi16b087_Ex1_Task_ToType" FromRole="wi16b087_Ex1_Type" ToRole="wi16b087_Ex1_Task" />
+        </EntityType>
+        <Association Name="FK_wi16b087_Ex1_Task_ToType">
+          <End Role="wi16b087_Ex1_Type" Type="Self.wi16b087_Ex1_Type" Multiplicity="1" />
+          <End Role="wi16b087_Ex1_Task" Type="Self.wi16b087_Ex1_Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="wi16b087_Ex1_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="wi16b087_Ex1_Task">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="wi16b087_Ex1_CrewMemberToTask">
+          <End Role="wi16b087_Ex1_CrewMember" Type="Self.wi16b087_Ex1_CrewMember" Multiplicity="*" />
+          <End Role="wi16b087_Ex1_Task" Type="Self.wi16b087_Ex1_Task" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="BwiTrainingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="wi16b087_Ex1_CrewMember" EntityType="Self.wi16b087_Ex1_CrewMember" />
+          <EntitySet Name="wi16b087_Ex1_Task" EntityType="Self.wi16b087_Ex1_Task" />
+          <EntitySet Name="wi16b087_Ex1_Type" EntityType="Self.wi16b087_Ex1_Type" />
+          <AssociationSet Name="FK_wi16b087_Ex1_Task_ToType" Association="Self.FK_wi16b087_Ex1_Task_ToType">
+            <End Role="wi16b087_Ex1_Type" EntitySet="wi16b087_Ex1_Type" />
+            <End Role="wi16b087_Ex1_Task" EntitySet="wi16b087_Ex1_Task" />
+          </AssociationSet>
+          <AssociationSet Name="wi16b087_Ex1_CrewMemberToTask" Association="Self.wi16b087_Ex1_CrewMemberToTask">
+            <End Role="wi16b087_Ex1_CrewMember" EntitySet="wi16b087_Ex1_CrewMember" />
+            <End Role="wi16b087_Ex1_Task" EntitySet="wi16b087_Ex1_Task" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BwiTrainingModelStoreContainer" CdmEntityContainer="BwiTrainingEntities">
+          <EntitySetMapping Name="wi16b087_Ex1_CrewMember">
+            <EntityTypeMapping TypeName="BwiTrainingModel.wi16b087_Ex1_CrewMember">
+              <MappingFragment StoreEntitySet="wi16b087_Ex1_CrewMember">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LicenseNumber" ColumnName="LicenseNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="wi16b087_Ex1_Task">
+            <EntityTypeMapping TypeName="BwiTrainingModel.wi16b087_Ex1_Task">
+              <MappingFragment StoreEntitySet="wi16b087_Ex1_Task">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="wi16b087_Ex1_Type">
+            <EntityTypeMapping TypeName="BwiTrainingModel.wi16b087_Ex1_Type">
+              <MappingFragment StoreEntitySet="wi16b087_Ex1_Type">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="wi16b087_Ex1_CrewMemberToTask" TypeName="BwiTrainingModel.wi16b087_Ex1_CrewMemberToTask" StoreEntitySet="wi16b087_Ex1_CrewMemberToTask">
+            <EndProperty Name="wi16b087_Ex1_CrewMember">
+              <ScalarProperty Name="Id" ColumnName="CrewMemberId" />
+            </EndProperty>
+            <EndProperty Name="wi16b087_Ex1_Task">
+              <ScalarProperty Name="Id" ColumnName="TaskId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
